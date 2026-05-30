@@ -245,6 +245,7 @@ function checkPwd() {
 
   <!-- 照片墙 -->
   <h2 class="section-title">📷 我们的照片</h2>
+  <p style="text-align:center;color:#ad1457;font-size:13px;">图片较多，请耐心等几秒...</p>
   <div class="gallery" id="gallery"></div>
 
   <!-- 时光轴 -->
@@ -333,10 +334,12 @@ const photos = [
   'photos/batch2/mmexport1777813944922.jpg',
 ];
 const gallery = document.getElementById('gallery');
-photos.forEach(src => {
+photos.forEach((src, i) => {
   const img = document.createElement('img');
   img.src = src;
   img.alt = '回忆';
+  img.loading = 'lazy';
+  img.onerror = function() { this.style.display = 'none'; };
   img.onclick = () => {
     document.getElementById('modalImg').src = src;
     document.getElementById('modal').classList.add('active');
