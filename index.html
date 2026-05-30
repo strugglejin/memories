@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>靳卓岩 ♥ 顾起超</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: "Microsoft YaHei", "SimHei", sans-serif;
+  background: linear-gradient(135deg, #fce4ec, #f8bbd0, #f48fb1);
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* ===== 飘落花瓣 ===== */
+.petals {
+  position: fixed; top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none; z-index: 0;
+}
+.petal {
+  position: absolute; top: -50px;
+  animation: fall linear infinite;
+  opacity: 0.7;
+}
+@keyframes fall {
+  0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+  10% { opacity: 0.7; }
+  90% { opacity: 0.7; }
+  100% { transform: translateY(105vh) rotate(720deg); opacity: 0; }
+}
+
+/* ===== 主容器 ===== */
+.container {
+  position: relative; z-index: 1;
+  max-width: 800px; margin: 0 auto; padding: 20px;
+}
+
+/* ===== 首页 Hero ===== */
+.hero {
+  text-align: center; padding: 80px 20px;
+  background: rgba(255,255,255,0.25);
+  backdrop-filter: blur(10px);
+  border-radius: 30px; margin-top: 40px;
+  box-shadow: 0 8px 32px rgba(245, 124, 156, 0.2);
+}
+.names {
+  font-size: 42px; font-weight: bold;
+  color: #d81b60; margin-bottom: 10px;
+}
+.heart { font-size: 50px; display: block; margin: 10px 0; animation: beat 1s infinite; }
+@keyframes beat {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+}
+.days-box {
+  margin: 25px 0; padding: 20px;
+  background: rgba(255,255,255,0.5); border-radius: 20px;
+}
+.days-num {
+  font-size: 64px; font-weight: bold;
+  color: #e91e63; line-height: 1;
+}
+.days-label { font-size: 16px; color: #ad1457; margin-top: 5px; }
+.love-quote { font-size: 18px; color: #880e4f; font-style: italic; margin-top: 20px; }
+
+/* ===== 照片区域 ===== */
+.section-title {
+  text-align: center; font-size: 28px; color: #d81b60;
+  margin: 50px 0 25px; font-weight: bold;
+}
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 15px;
+}
+.gallery img {
+  width: 100%; height: 300px;
+  object-fit: cover; border-radius: 15px;
+  transition: transform 0.3s, box-shadow 0.3s;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+}
+.gallery img:hover {
+  transform: scale(1.08);
+  box-shadow: 0 8px 30px rgba(233, 30, 99, 0.4);
+}
+
+/* ===== 纪念日 ===== */
+.countdowns {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 15px; margin-bottom: 30px;
+}
+.cd-card {
+  background: rgba(255,255,255,0.3);
+  backdrop-filter: blur(10px);
+  border-radius: 20px; padding: 25px; text-align: center;
+  box-shadow: 0 4px 15px rgba(245, 124, 156, 0.15);
+}
+.cd-label { font-size: 14px; color: #ad1457; margin-bottom: 8px; }
+.cd-days { font-size: 36px; font-weight: bold; color: #e91e63; }
+
+/* ===== 时光轴 ===== */
+.timeline {
+  position: relative; padding: 20px 0;
+}
+.timeline::before {
+  content: ''; position: absolute;
+  left: 50%; top: 0; bottom: 0; width: 3px;
+  background: linear-gradient(to bottom, #f48fb1, #e91e63, #f48fb1);
+  transform: translateX(-50%);
+}
+.event {
+  display: flex; align-items: center;
+  margin: 30px 0; position: relative;
+}
+.event:nth-child(odd) { flex-direction: row; }
+.event:nth-child(even) { flex-direction: row-reverse; }
+.event-content {
+  width: 43%; padding: 18px 22px;
+  background: rgba(255,255,255,0.35);
+  backdrop-filter: blur(8px);
+  border-radius: 18px;
+  box-shadow: 0 4px 15px rgba(245, 124, 156, 0.15);
+  transition: transform 0.3s;
+}
+.event-content:hover { transform: scale(1.03); }
+.event-dot {
+  width: 16px; height: 16px;
+  background: #e91e63; border-radius: 50%;
+  position: absolute; left: 50%;
+  transform: translateX(-50%);
+  box-shadow: 0 0 15px #e91e63;
+  z-index: 2;
+}
+.event-date { font-size: 14px; color: #e91e63; font-weight: bold; }
+.event-title { font-size: 20px; color: #ad1457; margin: 5px 0; }
+.event-desc { font-size: 14px; color: #666; }
+.event-photo {
+  width: 43%; border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+}
+
+/* ===== 弹窗看大图 ===== */
+.modal {
+  display: none; position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(0,0,0,0.85); z-index: 999;
+  justify-content: center; align-items: center;
+}
+.modal.active { display: flex; }
+.modal img { max-width: 90%; max-height: 90%; border-radius: 10px; }
+.modal-close {
+  position: absolute; top: 20px; right: 30px;
+  font-size: 40px; color: white; cursor: pointer;
+}
+
+/* ===== 页脚 ===== */
+.footer {
+  text-align: center; padding: 40px;
+  color: #ad1457; font-size: 16px;
+}
+
+/* ===== 移动端适配 ===== */
+@media (max-width: 600px) {
+  .names { font-size: 28px; }
+  .days-num { font-size: 46px; }
+  .gallery { grid-template-columns: repeat(2, 1fr); }
+  .gallery img { height: 180px; }
+  .timeline::before { left: 20px; }
+  .event, .event:nth-child(even) { flex-direction: column; align-items: flex-start; margin-left: 30px; }
+  .event-content, .event-photo { width: 90%; }
+  .event-dot { left: 20px; }
+}
+</style>
+</head>
+<body>
+
+<!-- 飘落花瓣容器 -->
+<div class="petals" id="petals"></div>
+
+<!-- 主内容 -->
+<!-- 密码锁 -->
+<div id="lock" style="display:flex;position:fixed;top:0;left:0;width:100%;height:100%;
+  background:linear-gradient(135deg,#fce4ec,#f8bbd0,#f48fb1);z-index:9999;
+  flex-direction:column;align-items:center;justify-content:center;font-family:'Microsoft YaHei',sans-serif;">
+  <div style="font-size:60px;">💕</div>
+  <div style="font-size:24px;color:#d81b60;margin:20px;">这是我们的秘密花园</div>
+  <input id="pwd" type="password" placeholder="输入我们的纪念日（如 1203）"
+    style="padding:12px 20px;font-size:18px;border:2px solid #e91e63;border-radius:25px;
+    outline:none;text-align:center;width:250px;">
+  <button onclick="checkPwd()" style="margin-top:15px;padding:10px 40px;font-size:16px;
+    background:#e91e63;color:white;border:none;border-radius:25px;cursor:pointer;">
+    💌 打开回忆</button>
+  <p id="pwderr" style="color:#c62828;margin-top:10px;display:none;">密码不对哦，再试一次 💔</p>
+</div>
+<script>
+function checkPwd() {
+  if (document.getElementById('pwd').value === '1203') {
+    document.getElementById('lock').style.display = 'none';
+  } else {
+    document.getElementById('pwderr').style.display = 'block';
+  }
+}
+</script>
+
+<div class="container">
+
+  <!-- 首页 Hero -->
+  <section class="hero">
+    <div class="names">靳卓岩 <span class="heart">♥</span> 顾起超</div>
+    <div class="days-box">
+      <div class="days-num" id="loveDays">0</div>
+      <div class="days-label">天 · 一直在一起</div>
+    </div>
+    <div class="love-quote" id="loveQuote"></div>
+    <p style="margin-top:15px; color:#ad1457;">
+      🎂 卓岩 2003.07.17 ｜ 起超 2003.06.21
+    </p>
+  </section>
+
+  <!-- 纪念日倒计时 -->
+  <h2 class="section-title">💕 纪念日倒计时</h2>
+  <div class="countdowns">
+    <div class="cd-card">
+      <div class="cd-label">📅 周年纪念日</div>
+      <div class="cd-days" id="anniCount">--</div>
+      <div style="font-size:13px;color:#ad1457;">2021.12.03</div>
+    </div>
+    <div class="cd-card">
+      <div class="cd-label">🎂 起超生日</div>
+      <div class="cd-days" id="bbBirth">--</div>
+      <div style="font-size:13px;color:#ad1457;">06.21</div>
+    </div>
+    <div class="cd-card">
+      <div class="cd-label">🎂 卓岩生日</div>
+      <div class="cd-days" id="jyBirth">--</div>
+      <div style="font-size:13px;color:#ad1457;">07.17</div>
+    </div>
+  </div>
+
+  <!-- 照片墙 -->
+  <h2 class="section-title">📷 我们的照片</h2>
+  <div class="gallery" id="gallery"></div>
+
+  <!-- 时光轴 -->
+  <h2 class="section-title">💌 恋爱时光轴</h2>
+  <div class="timeline" id="timeline"></div>
+
+  <!-- 页脚 -->
+  <div class="footer">
+    靳卓岩 ♥ 顾起超 · 永远爱你<br>
+    <span style="font-size:12px;">专属我们的回忆网站</span>
+  </div>
+
+</div>
+
+<!-- 大图弹窗 -->
+<div class="modal" id="modal" onclick="this.classList.remove('active')">
+  <span class="modal-close">&times;</span>
+  <img id="modalImg" src="" alt="">
+</div>
+
+<script>
+// ===== 恋爱天数 =====
+const togetherDate = new Date('2021-12-03');
+function updateDays() {
+  const now = new Date();
+  const diff = Math.floor((now - togetherDate) / (1000 * 60 * 60 * 24));
+  document.getElementById('loveDays').textContent = diff.toLocaleString();
+}
+updateDays();
+setInterval(updateDays, 60000);
+
+// ===== 随机情话 =====
+const quotes = [
+  "遇见你，是我这辈子最幸运的事 💕",
+  "从校服到婚纱，我只要你一个人 👰",
+  "每一天都比昨天更爱你一点 ✨",
+  "你的名字，是我听过最短的情诗 🌸",
+  "世界很大，我的心很小，只装得下你 💖",
+  "想和你一起看遍世界，从日出到日落 🌅",
+  "你是我的太阳，照亮了我的全世界 ☀️",
+];
+document.getElementById('loveQuote').textContent =
+  quotes[Math.floor(Math.random() * quotes.length)];
+
+// ===== 纪念日倒计时 =====
+function daysUntil(mm, dd) {
+  const now = new Date();
+  const target = new Date(now.getFullYear(), mm - 1, dd);
+  if (target < now) target.setFullYear(target.getFullYear() + 1);
+  return Math.ceil((target - now) / (1000 * 60 * 60 * 24));
+}
+document.getElementById('anniCount').textContent = daysUntil(12, 3) + '天';
+document.getElementById('bbBirth').textContent = daysUntil(6, 21) + '天';
+document.getElementById('jyBirth').textContent = daysUntil(7, 17) + '天';
+
+// ===== 照片墙 =====
+const photos = [
+  'photos/IMG20231006160257.jpg',
+  'photos/IMG20231010110141.jpg',
+  'photos/b8d1b447818d34754d73c5a7cd48f06f_750.png',
+  'photos/mmexport1697181233158.jpg',
+  'photos/mmexport1777813944922等21项文件/IMG20231014212329.jpg',
+  'photos/mmexport1777813944922等21项文件/IMG20231127212531.jpg',
+  'photos/mmexport1777813944922等21项文件/IMG20231229122837.jpg',
+  'photos/mmexport1777813944922等21项文件/IMG20231229122845.jpg',
+  'photos/mmexport1777813944922等21项文件/IMG20231229132607.jpg',
+  'photos/mmexport1777813944922等21项文件/IMG20231229132616.jpg',
+  'photos/mmexport1777813944922等21项文件/IMG20231229154351.jpg',
+  'photos/mmexport1777813944922等21项文件/IMG20231229154356.jpg',
+  'photos/mmexport1777813944922等21项文件/IMG20231229154434.jpg',
+  'photos/mmexport1777813944922等21项文件/IMG20231229154435.jpg',
+  'photos/mmexport1777813944922等21项文件/IMG20231229154902.jpg',
+  'photos/mmexport1777813944922等21项文件/IMG20231229154905.jpg',
+  'photos/mmexport1777813944922等21项文件/IMG20231229155124.jpg',
+  'photos/mmexport1777813944922等21项文件/IMG20231229155130.jpg',
+  'photos/mmexport1777813944922等21项文件/IMG20231229163449.jpg',
+  'photos/mmexport1777813944922等21项文件/IMG20231229163454.jpg',
+  'photos/mmexport1777813944922等21项文件/IMG20231229163459.jpg',
+  'photos/mmexport1777813944922等21项文件/IMG20260522150030.jpg',
+  'photos/mmexport1777813944922等21项文件/mmexport1765022762707.jpg',
+  'photos/mmexport1777813944922等21项文件/mmexport1765022765167.jpg',
+  'photos/mmexport1777813944922等21项文件/mmexport1777813944922.jpg',
+];
+const gallery = document.getElementById('gallery');
+photos.forEach(src => {
+  const img = document.createElement('img');
+  img.src = src;
+  img.alt = '回忆';
+  img.onclick = () => {
+    document.getElementById('modalImg').src = src;
+    document.getElementById('modal').classList.add('active');
+  };
+  gallery.appendChild(img);
+});
+
+// ===== 时光轴 =====
+const events = [
+  { date: '2021年夏', title: '我们相遇了', desc: '命运让我们在茫茫人海中相遇，那一刻我就知道，你是最特别的那个人。', photo: null },
+  { date: '2021.12.03', title: '正式在一起 💑', desc: '我们在一起了！这一天，是全世界最美好的一天，以后每年的这一天都是我们的纪念日。', photo: null },
+  { date: '2022年', title: '一起度过的第一年', desc: '365个日夜，有笑有泪，每一刻都值得珍惜。和你在一起的每一天，都是最好的礼物。', photo: null },
+  { date: '2023.10', title: '快乐出游 📸', desc: '我们一起去旅行，拍了好多照片，留下了最美好的回忆。每一个瞬间都想永远珍藏。', photo: 'photos/IMG20231006160257.jpg' },
+  { date: '2023.10', title: '甜蜜日常 ☀️', desc: '和你在一起的每一天，连呼吸都是甜的。就算只是吃饭逛街，也因为有你而变得特别。', photo: 'photos/IMG20231010110141.jpg' },
+  { date: '2024年', title: '第三年了', desc: '三年，1095天，我们的故事依然在继续。谢谢你一直在我身边，陪我走过每一个春夏秋冬。', photo: null },
+  { date: '未来', title: '未完待续... 💕', desc: '我们的故事才刚刚开始，未来的每一天，都想和你一起度过。娶你回家，是我最大的梦想。', photo: null },
+];
+
+const timeline = document.getElementById('timeline');
+events.forEach(e => {
+  const div = document.createElement('div');
+  div.className = 'event';
+
+  let contentHTML = `
+    <div class="event-content">
+      <div class="event-date">${e.date}</div>
+      <div class="event-title">${e.title}</div>
+      <div class="event-desc">${e.desc}</div>
+    </div>`;
+
+  let photoHTML = e.photo
+    ? `<img class="event-photo" src="${e.photo}" alt="" onclick="document.getElementById('modalImg').src='${e.photo}'; document.getElementById('modal').classList.add('active');" style="cursor:pointer;">`
+    : `<div class="event-photo" style="display:flex;align-items:center;justify-content:center;font-size:50px;">💕</div>`;
+
+  div.innerHTML = contentHTML + photoHTML + '<div class="event-dot"></div>';
+  timeline.appendChild(div);
+});
+
+// ===== 飘落花瓣 =====
+const petalsContainer = document.getElementById('petals');
+const petalChars = ['🌸', '💕', '💖', '🌷', '✨', '💗'];
+for (let i = 0; i < 30; i++) {
+  const petal = document.createElement('span');
+  petal.className = 'petal';
+  petal.textContent = petalChars[Math.floor(Math.random() * petalChars.length)];
+  petal.style.left = Math.random() * 100 + '%';
+  petal.style.fontSize = (Math.random() * 20 + 14) + 'px';
+  petal.style.animationDuration = (Math.random() * 10 + 8) + 's';
+  petal.style.animationDelay = Math.random() * 15 + 's';
+  petalsContainer.appendChild(petal);
+}
+
+// ===== 点击出现爱心 =====
+document.addEventListener('click', function(e) {
+  const heart = document.createElement('span');
+  heart.textContent = '♥';
+  heart.style.cssText = `
+    position: fixed; left: ${e.clientX}px; top: ${e.clientY}px;
+    font-size: 24px; color: #e91e63; pointer-events: none; z-index: 9999;
+    animation: popHeart 1s ease-out forwards;
+  `;
+  document.body.appendChild(heart);
+  setTimeout(() => heart.remove(), 1000);
+});
+// 爱心弹出动画
+const style = document.createElement('style');
+style.textContent = `
+@keyframes popHeart {
+  0% { transform: translate(0,0) scale(1); opacity: 1; }
+  100% { transform: translate(0,-80px) scale(2); opacity: 0; }
+}`;
+document.head.appendChild(style);
+</script>
+
+</body>
+</html>
