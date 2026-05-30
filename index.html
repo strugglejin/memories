@@ -273,8 +273,12 @@ function updateDays() {
   const diff = Math.floor((now - togetherDate) / (1000 * 60 * 60 * 24));
   document.getElementById('loveDays').textContent = diff.toLocaleString();
 }
+document.addEventListener('DOMContentLoaded', function() {
+  updateDays();
+  setInterval(updateDays, 60000);
+});
+// 立即先跑一次
 updateDays();
-setInterval(updateDays, 60000);
 
 // ===== 随机情话 =====
 const quotes = [
@@ -306,27 +310,27 @@ const photos = [
   'photos/IMG20231010110141.jpg',
   'photos/b8d1b447818d34754d73c5a7cd48f06f_750.png',
   'photos/mmexport1697181233158.jpg',
-  'photos/mmexport1777813944922等21项文件/IMG20231014212329.jpg',
-  'photos/mmexport1777813944922等21项文件/IMG20231127212531.jpg',
-  'photos/mmexport1777813944922等21项文件/IMG20231229122837.jpg',
-  'photos/mmexport1777813944922等21项文件/IMG20231229122845.jpg',
-  'photos/mmexport1777813944922等21项文件/IMG20231229132607.jpg',
-  'photos/mmexport1777813944922等21项文件/IMG20231229132616.jpg',
-  'photos/mmexport1777813944922等21项文件/IMG20231229154351.jpg',
-  'photos/mmexport1777813944922等21项文件/IMG20231229154356.jpg',
-  'photos/mmexport1777813944922等21项文件/IMG20231229154434.jpg',
-  'photos/mmexport1777813944922等21项文件/IMG20231229154435.jpg',
-  'photos/mmexport1777813944922等21项文件/IMG20231229154902.jpg',
-  'photos/mmexport1777813944922等21项文件/IMG20231229154905.jpg',
-  'photos/mmexport1777813944922等21项文件/IMG20231229155124.jpg',
-  'photos/mmexport1777813944922等21项文件/IMG20231229155130.jpg',
-  'photos/mmexport1777813944922等21项文件/IMG20231229163449.jpg',
-  'photos/mmexport1777813944922等21项文件/IMG20231229163454.jpg',
-  'photos/mmexport1777813944922等21项文件/IMG20231229163459.jpg',
-  'photos/mmexport1777813944922等21项文件/IMG20260522150030.jpg',
-  'photos/mmexport1777813944922等21项文件/mmexport1765022762707.jpg',
-  'photos/mmexport1777813944922等21项文件/mmexport1765022765167.jpg',
-  'photos/mmexport1777813944922等21项文件/mmexport1777813944922.jpg',
+  'photos/batch2/IMG20231014212329.jpg',
+  'photos/batch2/IMG20231127212531.jpg',
+  'photos/batch2/IMG20231229122837.jpg',
+  'photos/batch2/IMG20231229122845.jpg',
+  'photos/batch2/IMG20231229132607.jpg',
+  'photos/batch2/IMG20231229132616.jpg',
+  'photos/batch2/IMG20231229154351.jpg',
+  'photos/batch2/IMG20231229154356.jpg',
+  'photos/batch2/IMG20231229154434.jpg',
+  'photos/batch2/IMG20231229154435.jpg',
+  'photos/batch2/IMG20231229154902.jpg',
+  'photos/batch2/IMG20231229154905.jpg',
+  'photos/batch2/IMG20231229155124.jpg',
+  'photos/batch2/IMG20231229155130.jpg',
+  'photos/batch2/IMG20231229163449.jpg',
+  'photos/batch2/IMG20231229163454.jpg',
+  'photos/batch2/IMG20231229163459.jpg',
+  'photos/batch2/IMG20260522150030.jpg',
+  'photos/batch2/mmexport1765022762707.jpg',
+  'photos/batch2/mmexport1765022765167.jpg',
+  'photos/batch2/mmexport1777813944922.jpg',
 ];
 const gallery = document.getElementById('gallery');
 photos.forEach(src => {
